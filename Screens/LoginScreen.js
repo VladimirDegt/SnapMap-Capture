@@ -1,5 +1,5 @@
 import {
-  Image,
+  Linking,
   StyleSheet,
   Text,
   TextInput,
@@ -12,7 +12,7 @@ import {
   Roboto_400Regular,
 } from "@expo-google-fonts/roboto";
 
-const RegistrationScreen = () => {
+const LoginScreen = () => {
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
@@ -22,30 +22,29 @@ const RegistrationScreen = () => {
     return null;
   }
 
+  const handleRegisterPress = () => {
+    Linking.openURL("https://your-registration-page.com");
+  };
+
   return (
-    <>
-      <View style={styles.rectangle}>
-      <View style={styles.framePhoto}>
-        <View style={styles.rectanglePhoto}/>
-        <Image source={require('../assets/add.png')} style={styles.addPng}/>
+    <View style={styles.rectangle}>
+      <Text style={styles.title}>Увійти</Text>
+      <TextInput style={styles.input} placeholder="Адреса електронної пошти" />
+      <View style={styles.containerInput}>
+        <TextInput style={styles.inputDot} placeholder="............" />
+        <Text style={styles.textInInput}>Показати</Text>
       </View>
-        <Text style={styles.title}>Реєстрація</Text>
-        <TextInput style={styles.input} placeholder="Логін" />
-        <TextInput
-          style={styles.input}
-          placeholder="Адреса електронної пошти"
-        />
-        <View style={styles.containerInput}>
-          <TextInput style={styles.input} placeholder="Пароль"/>
-          <Text style={styles.textInInput}>Показати</Text>
-        </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Зареєструватися</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Увійти</Text>
+      </TouchableOpacity>
+      <View style={styles.rowContainer}>
+        <Text style={styles.textafterbutton}>Немає акаунту?</Text>
+        <TouchableOpacity onPress={handleRegisterPress}>
+          <Text style={styles.linkText}>Зареєструватися</Text>
         </TouchableOpacity>
-        <Text style={styles.textafterbutton}>Вже є акаунт? Увійти</Text>
-        <View style={styles.line} />
       </View>
-    </>
+      <View style={styles.line} />
+    </View>
   );
 };
 
@@ -53,8 +52,8 @@ const styles = StyleSheet.create({
   framePhoto: {
     width: 132,
     height: 120,
-    position: 'absolute',
-    left: '50%',
+    position: "absolute",
+    left: "50%",
     transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
   },
   rectanglePhoto: {
@@ -64,15 +63,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
   },
   addPng: {
-    position: 'absolute',
+    position: "absolute",
     left: 107,
     top: 81,
     width: 25,
     height: 25,
   },
   rectangle: {
-    width: '100%',
-    position: 'relative',
+    width: "100%",
+    position: "relative",
     paddingLeft: 16,
     paddingRight: 16,
     borderTopLeftRadius: 25,
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   title: {
-    marginTop: 92,
+    marginTop: 32,
     marginBottom: 32,
     fontSize: 30,
     textAlign: "center",
@@ -89,13 +88,27 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    padding: 16,
+    paddingTop: 10,
+    paddingLeft: 16,
+    paddingBottom: 22,
     borderRadius: 8,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
     fontSize: 16,
     fontFamily: "Roboto_400Regular",
     placeholderTextColor: "#BDBDBD",
+  },
+  inputDot: {
+    height: 50,
+    paddingTop: 10,
+    paddingLeft: 16,
+    paddingBottom: 22,
+    borderRadius: 8,
+    marginBottom: 16,
+    backgroundColor: "#F6F6F6",
+    fontSize: 15,
+    fontFamily: "Roboto_400Regular",
+    placeholderTextColor: "#212121",
   },
   containerInput: {
     position: "relative",
@@ -126,7 +139,21 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto_400Regular",
     fontSize: 16,
     textAlign: "center",
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    fontFamily: "Roboto_400Regular",
+    fontSize: 16,
+    color: "#1B4371",
+  },
+  rowContainer: {
     marginTop: 16,
+    marginLeft: "auto",
+    marginRight: "auto",
+    flexDirection: 'row',
+    alignItems: 'center',
+    textAlign: "center",
+    gap: 4,
   },
   line: {
     width: 134,
@@ -140,4 +167,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegistrationScreen;
+export default LoginScreen;
