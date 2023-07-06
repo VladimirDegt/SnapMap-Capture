@@ -23,18 +23,21 @@ const RegistrationScreen = () => {
 
   return (
     <>
+      <View style={styles.rectangle}>
       <View style={styles.framePhoto}>
         <View style={styles.rectanglePhoto}/>
-        <Image source={require('../assets/add.png')} style={styles.add}/>
+        <Image source={require('../assets/add.png')} style={styles.addPng}/>
       </View>
-      <View style={styles.rectangle}>
         <Text style={styles.title}>Реєстрація</Text>
         <TextInput style={styles.input} placeholder="Логін" />
         <TextInput
           style={styles.input}
           placeholder="Адреса електронної пошти"
         />
-        <TextInput style={styles.input} placeholder="Пароль" />
+        <View style={styles.containerInput}>
+          <TextInput style={styles.input} placeholder="Пароль"/>
+          <Text style={styles.textInInput}>Показати</Text>
+        </View>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Зареєструватися</Text>
         </TouchableOpacity>
@@ -49,7 +52,9 @@ const styles = StyleSheet.create({
   framePhoto: {
     width: 132,
     height: 120,
-    top: 203,
+    position: 'absolute',
+    left: '50%',
+    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
   },
   rectanglePhoto: {
     width: 120,
@@ -57,14 +62,16 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
   },
-  add: {
-    marginTop: 81,
-    marginLeft: 107,
+  addPng: {
+    position: 'absolute',
+    left: 107,
+    top: 81,
+    width: 25,
+    height: 25,
   },
   rectangle: {
-    width: 375,
-    height: 549,
-    top: 263,
+    width: '100%',
+    position: 'relative',
     paddingLeft: 16,
     paddingRight: 16,
     borderTopLeftRadius: 25,
@@ -88,6 +95,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Roboto_400Regular",
     placeholderTextColor: "#BDBDBD",
+  },
+  containerInput: {
+    position: "relative",
+  },
+  textInInput: {
+    position: "absolute",
+    right: 0,
+    top: "50%",
+    transform: [{ translateX: "-50%" }],
   },
   button: {
     marginTop: 43,
@@ -113,6 +129,7 @@ const styles = StyleSheet.create({
     width: 134,
     height: 5,
     marginTop: 66,
+    marginBottom: 8,
     backgroundColor: "#212121",
     borderColor: "#979797",
     borderRadius: 100,
