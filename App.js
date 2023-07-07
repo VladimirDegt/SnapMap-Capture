@@ -10,8 +10,8 @@ export default function App() {
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        {/* <RegistrationScreen /> */}
-        <LoginScreen/>
+        <RegistrationScreen />
+        {/* <LoginScreen/> */}
         <StatusBar style="auto" />
       </View>
     </ImageBackground>

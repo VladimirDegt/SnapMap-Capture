@@ -10,12 +10,14 @@ import {
   useFonts,
   Roboto_500Medium,
   Roboto_400Regular,
+  Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 
 const LoginScreen = () => {
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
+    Roboto_700Bold,
   });
 
   if (!fontsLoaded) {
@@ -54,7 +56,7 @@ const styles = StyleSheet.create({
     height: 120,
     position: "absolute",
     left: "50%",
-    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
+    transform: [{ translateX: -50 }, { translateY: -50 }],
   },
   rectanglePhoto: {
     width: 120,
@@ -88,9 +90,9 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    paddingTop: 10,
+    paddingTop: 16,
     paddingLeft: 16,
-    paddingBottom: 22,
+    paddingBottom: 16,
     borderRadius: 8,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
@@ -100,9 +102,9 @@ const styles = StyleSheet.create({
   },
   inputDot: {
     height: 50,
-    paddingTop: 10,
+    paddingTop: 16,
     paddingLeft: 16,
-    paddingBottom: 22,
+    paddingBottom: 16,
     borderRadius: 8,
     marginBottom: 16,
     backgroundColor: "#F6F6F6",
