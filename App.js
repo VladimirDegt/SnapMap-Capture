@@ -1,7 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback, // імпорт компонента обгортки
+  Keyboard, // імпорт компонента клавіатури
+} from "react-native";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
+import { FormRegistr } from "./components/FormRegistr";
 
 export default function App() {
   return (
@@ -9,11 +18,18 @@ export default function App() {
       source={require("./assets/PhotoBG.jpg")}
       style={styles.backgroundImage}
     >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <RegistrationScreen />
-        {/* <LoginScreen/> */}
-        <StatusBar style="auto" />
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+        >
+          {/* <RegistrationScreen /> */}
+          {/* <LoginScreen/> */}
+          <FormRegistr />
+          <StatusBar style="auto" />
+        </KeyboardAvoidingView>
       </View>
+      </TouchableWithoutFeedback>
     </ImageBackground>
   );
 }

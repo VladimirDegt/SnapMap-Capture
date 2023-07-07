@@ -125,6 +125,8 @@ const styles = StyleSheet.create({
   photoUser: {
     position: "absolute",
     borderRadius: 16,
+    width: 120,
+    height: 120,
   },
   rectangle: {
     width: "100%",

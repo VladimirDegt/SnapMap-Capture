@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Linking,
   StyleSheet,
@@ -14,6 +15,8 @@ import {
 } from "@expo-google-fonts/roboto";
 
 const LoginScreen = () => {
+  const [inputValueEmail, setInputValueEmail] = useState("");
+  const [inputValuePassword, setInputValuePassword] = useState("");
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
@@ -28,25 +31,48 @@ const LoginScreen = () => {
     Linking.openURL("https://your-registration-page.com");
   };
 
+  const handleTextInputEmailChange = (e) => {
+    setInputValueEmail(e);
+  };
+  const handleTextInputPasswordChange = (e) => {
+    setInputValuePassword(e);
+  };
   return (
+    
     <View style={styles.rectangle}>
       <Text style={styles.title}>Увійти</Text>
-      <TextInput style={styles.input} placeholder="Адреса електронної пошти" />
+
+      <TextInput
+        style={styles.input}
+        placeholder="Адреса електронної пошти"
+        onChangeText={handleTextInputEmailChange}
+      />
       <View style={styles.containerInput}>
-        <TextInput style={styles.inputDot} placeholder="............" />
+        <TextInput
+          style={styles.inputDot}
+          secureTextEntry
+          onChangeText={handleTextInputPasswordChange}
+        />
         <Text style={styles.textInInput}>Показати</Text>
       </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Увійти</Text>
-      </TouchableOpacity>
-      <View style={styles.rowContainer}>
-        <Text style={styles.textafterbutton}>Немає акаунту?</Text>
-        <TouchableOpacity onPress={handleRegisterPress}>
-          <Text style={styles.linkText}>Зареєструватися</Text>
-        </TouchableOpacity>
-      </View>
+
+      {inputValueEmail === "" && inputValuePassword === "" && (
+        <>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Увійти</Text>
+          </TouchableOpacity>
+          <View style={styles.rowContainer}>
+            <Text style={styles.textafterbutton}>Немає акаунту?</Text>
+            <TouchableOpacity onPress={handleRegisterPress}>
+              <Text style={styles.linkText}>Зареєструватися</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
+
       <View style={styles.line} />
     </View>
+
   );
 };
 
@@ -152,8 +178,8 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginLeft: "auto",
     marginRight: "auto",
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     textAlign: "center",
     gap: 4,
   },
