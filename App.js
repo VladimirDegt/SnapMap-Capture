@@ -3,10 +3,7 @@ import {
   ImageBackground,
   StyleSheet,
   View,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback, // імпорт компонента обгортки
-  Keyboard, // імпорт компонента клавіатури
+
 } from "react-native";
 import RegistrationScreen from "./Screens/RegistrationScreen";
 import LoginScreen from "./Screens/LoginScreen";
@@ -18,18 +15,12 @@ export default function App() {
       source={require("./assets/PhotoBG.jpg")}
       style={styles.backgroundImage}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
           {/* <RegistrationScreen /> */}
           {/* <LoginScreen/> */}
           <FormRegistr />
           <StatusBar style="auto" />
-        </KeyboardAvoidingView>
       </View>
-      </TouchableWithoutFeedback>
     </ImageBackground>
   );
 }
