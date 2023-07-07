@@ -14,9 +14,9 @@ import {
 import { useState } from "react";
 
 const RegistrationScreen = () => {
-  const [inputValueLogin, setInputValueLogin] = useState('');
-  const [inputValueEmail, setInputValueEmail] = useState('');
-  const [inputValuePassword, setInputValuePassword] = useState('');
+  const [inputValueLogin, setInputValueLogin] = useState("");
+  const [inputValueEmail, setInputValueEmail] = useState("");
+  const [inputValuePassword, setInputValuePassword] = useState("");
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -25,43 +25,63 @@ const RegistrationScreen = () => {
 
   if (!fontsLoaded) {
     return null;
-  };
+  }
 
   const handleTextInputLoginChange = (e) => {
-    setInputValueLogin(e)
+    setInputValueLogin(e);
   };
   const handleTextInputEmailChange = (e) => {
-    setInputValueEmail(e)
+    setInputValueEmail(e);
   };
   const handleTextInputPasswordChange = (e) => {
-    setInputValuePassword(e)
+    setInputValuePassword(e);
   };
 
   return (
-      <View style={styles.rectangle}>
+    <View style={styles.rectangle}>
       <View style={styles.framePhoto}>
-        <View style={styles.rectanglePhoto}/>
-        {(inputValueLogin === '' && inputValueEmail === '' && inputValuePassword === '') 
-        ? <Image source={require('../assets/add.png')} style={styles.addPng}/> 
-        : (
+        <View style={styles.rectanglePhoto} />
+        {inputValueLogin === "" &&
+        inputValueEmail === "" &&
+        inputValuePassword === "" ? (
+          <Image source={require("../assets/add.png")} style={styles.addPng} />
+        ) : (
           <>
-        <Image source={require('../assets/PhotoUser.jpg')} style={styles.photoUser}/>
-        <Image source={require('../assets/addDisable.png')} style={styles.addDisable}/>
-        </>
-        )
-        }
-
+            <Image
+              source={require("../assets/PhotoUser.jpg")}
+              style={styles.photoUser}
+            />
+            <Image
+              source={require("../assets/addDisable.png")}
+              style={styles.addDisable}
+            />
+          </>
+        )}
       </View>
-        <Text style={styles.title}>Реєстрація</Text>
-        <TextInput style={[styles.input, inputValueLogin && styles.inputActive]} placeholder="Логін" onChangeText={handleTextInputLoginChange}/>
+      <Text style={styles.title}>Реєстрація</Text>
+      <TextInput
+        style={[styles.input, inputValueLogin && styles.inputActive]}
+        placeholder="Логін"
+        onChangeText={handleTextInputLoginChange}
+      />
+      <TextInput
+        style={[styles.input, inputValueEmail && styles.inputActive]}
+        placeholder="Адреса електронної пошти"
+        onChangeText={handleTextInputEmailChange}
+      />
+      <View style={styles.containerInput}>
         <TextInput
-          style={[styles.input, inputValueEmail && styles.inputActive]} placeholder="Адреса електронної пошти" onChangeText={handleTextInputEmailChange}/>
-        <View style={styles.containerInput}>
-          <TextInput style={[styles.input, inputValuePassword && styles.inputActive]} placeholder="Пароль" onChangeText={handleTextInputPasswordChange}/>
-          <Text style={styles.textInInput}>Показати</Text>
-        </View>
-        
-        {inputValueLogin === '' && inputValueEmail === '' && inputValuePassword === '' && (
+          style={[styles.input, inputValuePassword && styles.inputActive]}
+          placeholder="Пароль"
+          secureTextEntry
+          onChangeText={handleTextInputPasswordChange}
+        />
+        <Text style={styles.textInInput}>Показати</Text>
+      </View>
+
+      {inputValueLogin === "" &&
+        inputValueEmail === "" &&
+        inputValuePassword === "" && (
           <>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Зареєструватися</Text>
@@ -69,8 +89,8 @@ const RegistrationScreen = () => {
             <Text style={styles.textafterbutton}>Вже є акаунт? Увійти</Text>
           </>
         )}
-        <View style={styles.line} />
-      </View>
+      <View style={styles.line} />
+    </View>
   );
 };
 
@@ -78,8 +98,8 @@ const styles = StyleSheet.create({
   framePhoto: {
     width: 132,
     height: 120,
-    position: 'absolute',
-    left: '50%',
+    position: "absolute",
+    left: "50%",
     transform: [{ translateX: -50 }, { translateY: -50 }],
   },
   rectanglePhoto: {
@@ -89,26 +109,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
   },
   addPng: {
-    position: 'absolute',
+    position: "absolute",
     left: 107,
     top: 81,
     width: 25,
     height: 25,
   },
   addDisable: {
-    position: 'absolute',
+    position: "absolute",
     left: 107,
     top: 81,
     width: 25,
     height: 25,
   },
   photoUser: {
-    position: 'absolute',
-    borderRadius: 16
+    position: "absolute",
+    borderRadius: 16,
   },
   rectangle: {
-    width: '100%',
-    position: 'relative',
+    width: "100%",
+    position: "relative",
     paddingLeft: 16,
     paddingRight: 16,
     borderTopLeftRadius: 25,
