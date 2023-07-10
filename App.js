@@ -15,8 +15,8 @@ export default function App() {
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        <FormRegistr />
-        {/* <FormLogin /> */}
+        {/* <FormRegistr /> */}
+        <FormLogin />
         <StatusBar style="auto" />
       </View>
     </ImageBackground>

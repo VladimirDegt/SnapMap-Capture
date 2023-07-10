@@ -42,55 +42,57 @@ export const FormLogin = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Text style={styles.title}>Увійти</Text>
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-      >
-        <Formik
-          initialValues={initialValue}
-          onSubmit={(values) => console.log(values)}
+      <View style={styles.rectangle}>
+        <Text style={styles.title}>Увійти</Text>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
         >
-          {({ handleChange, handleSubmit, values }) => (
-            <View>
-              <TextInput
-                style={[styles.input, emailFocus && styles.inputFocused]}
-                value={values.email}
-                placeholder="Адреса електронної пошти"
-                onChangeText={handleChange("email")}
-                onFocus={() => setEmailFocus(true)}
-                onBlur={() => setEmailFocus(false)}
-              />
-              <View style={styles.containerInput}>
+          <Formik
+            initialValues={initialValue}
+            onSubmit={(values) => console.log(values)}
+          >
+            {({ handleChange, handleSubmit, values }) => (
+              <View>
                 <TextInput
-                  style={[styles.input, passwordFocus && styles.inputFocused]}
-                  value={values.password}
-                  secureTextEntry
-                  placeholder="Пароль"
-                  onChangeText={handleChange("password")}
-                  onFocus={() => setPasswordFocus(true)}
-                  onBlur={() => setPasswordFocus(false)}
+                  style={[styles.input, emailFocus && styles.inputFocused]}
+                  value={values.email}
+                  placeholder="Адреса електронної пошти"
+                  onChangeText={handleChange("email")}
+                  onFocus={() => setEmailFocus(true)}
+                  onBlur={() => setEmailFocus(false)}
                 />
-                <Text style={styles.textInInput}>Показати</Text>
-              </View>
-              <>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={handleSubmit}
-                >
-                  <Text style={styles.buttonText}>Увійти</Text>
-                </TouchableOpacity>
-
-                <View style={styles.rowContainer}>
-                  <Text style={styles.textafterbutton}>Немає акаунту?</Text>
-                  <TouchableOpacity onPress={handleLoginPress}>
-                    <Text style={styles.linkText}>Зареєструватися</Text>
-                  </TouchableOpacity>
+                <View style={styles.containerInput}>
+                  <TextInput
+                    style={[styles.input, passwordFocus && styles.inputFocused]}
+                    value={values.password}
+                    secureTextEntry
+                    placeholder="Пароль"
+                    onChangeText={handleChange("password")}
+                    onFocus={() => setPasswordFocus(true)}
+                    onBlur={() => setPasswordFocus(false)}
+                  />
+                  <Text style={styles.textInInput}>Показати</Text>
                 </View>
-              </>
-            </View>
-          )}
-        </Formik>
-      </KeyboardAvoidingView>
+                <>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleSubmit}
+                  >
+                    <Text style={styles.buttonText}>Увійти</Text>
+                  </TouchableOpacity>
+
+                  <View style={styles.rowContainer}>
+                    <Text style={styles.textafterbutton}>Немає акаунту?</Text>
+                    <TouchableOpacity onPress={handleLoginPress}>
+                      <Text style={styles.linkText}>Зареєструватися</Text>
+                    </TouchableOpacity>
+                  </View>
+                </>
+              </View>
+            )}
+          </Formik>
+        </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
