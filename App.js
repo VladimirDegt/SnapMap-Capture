@@ -5,9 +5,8 @@ import {
   View,
 
 } from "react-native";
-import RegistrationScreen from "./Screens/RegistrationScreen";
-import LoginScreen from "./Screens/LoginScreen";
 import { FormRegistr } from "./components/FormRegistr";
+import { FormLogin } from "./components/FormLogin";
 
 export default function App() {
   return (
@@ -16,10 +15,9 @@ export default function App() {
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-          {/* <RegistrationScreen /> */}
-          {/* <LoginScreen/> */}
-          <FormRegistr />
-          <StatusBar style="auto" />
+        <FormRegistr />
+        {/* <FormLogin /> */}
+        <StatusBar style="auto" />
       </View>
     </ImageBackground>
   );
