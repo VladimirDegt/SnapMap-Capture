@@ -24,10 +24,11 @@ import {
 } from "@expo-google-fonts/roboto";
 
 export const FormRegistr = () => {
-  const navigation = useNavigation();
   const [loginFocus, setLoginFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(true)
+  const navigation = useNavigation();
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
@@ -43,88 +44,101 @@ export const FormRegistr = () => {
     password: "",
   };
 
+  const handleVisiblePassword = () => {
+    isVisiblePassword
+      ? setIsVisiblePassword(false)
+      : setIsVisiblePassword(true);
+  };
+
   return (
     <ImageBackground
       source={require("../assets/PhotoBG.jpg")}
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.rectangle}>
-          <View style={styles.framePhoto}>
-            <View style={styles.rectanglePhoto} />
-            <Image
-              source={require("../assets/PhotoUser.jpg")}
-              style={styles.photoUser}
-            />
-            <Image
-              source={require("../assets/addDisable.png")}
-              style={styles.addDisable}
-            />
-          </View>
-          <Text style={styles.title}>Реєстрація</Text>
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-          >
-            <Formik
-              initialValues={initialValue}
-              onSubmit={(values) => console.log(values)}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.rectangle}>
+            <View style={styles.framePhoto}>
+              <View style={styles.rectanglePhoto} />
+              <Image
+                source={require("../assets/PhotoUser.jpg")}
+                style={styles.photoUser}
+              />
+              <Image
+                source={require("../assets/addDisable.png")}
+                style={styles.addDisable}
+              />
+            </View>
+            <Text style={styles.title}>Реєстрація</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
             >
-              {({ handleChange, handleSubmit, values }) => (
-                <View>
-                  <TextInput
-                    style={[styles.input, loginFocus && styles.inputFocused]}
-                    value={values.login}
-                    placeholder="Логін"
-                    onChangeText={handleChange("login")}
-                    onFocus={() => setLoginFocus(true)}
-                    onBlur={() => setLoginFocus(false)}
-                  />
-                  <TextInput
-                    style={[styles.input, emailFocus && styles.inputFocused]}
-                    value={values.email}
-                    placeholder="Адреса електронної пошти"
-                    onChangeText={handleChange("email")}
-                    onFocus={() => setEmailFocus(true)}
-                    onBlur={() => setEmailFocus(false)}
-                  />
-                  <View style={styles.containerInput}>
+              <Formik
+                initialValues={initialValue}
+                onSubmit={(values) => console.log(values)}
+              >
+                {({ handleChange, handleSubmit, values }) => (
+                  <View>
                     <TextInput
-                      style={[
-                        styles.input,
-                        passwordFocus && styles.inputFocused,
-                      ]}
-                      value={values.password}
-                      secureTextEntry
-                      placeholder="Пароль"
-                      onChangeText={handleChange("password")}
-                      onFocus={() => setPasswordFocus(true)}
-                      onBlur={() => setPasswordFocus(false)}
+                      style={[styles.input, loginFocus && styles.inputFocused]}
+                      value={values.login}
+                      placeholder="Логін"
+                      onChangeText={handleChange("login")}
+                      onFocus={() => setLoginFocus(true)}
+                      onBlur={() => setLoginFocus(false)}
                     />
-                    <Text style={styles.textInInput}>Показати</Text>
-                  </View>
-                  <>
-                    <TouchableOpacity
-                      style={styles.button}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={styles.buttonText}>Зареєструватися</Text>
-                    </TouchableOpacity>
-                    <View style={styles.rowContainer}>
-                      <Text style={styles.textafterbutton}>Вже є акаунт?</Text>
+                    <TextInput
+                      style={[styles.input, emailFocus && styles.inputFocused]}
+                      value={values.email}
+                      placeholder="Адреса електронної пошти"
+                      onChangeText={handleChange("email")}
+                      onFocus={() => setEmailFocus(true)}
+                      onBlur={() => setEmailFocus(false)}
+                    />
+                    <View style={styles.containerInput}>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          passwordFocus && styles.inputFocused,
+                        ]}
+                        value={values.password}
+                        secureTextEntry={isVisiblePassword}
+                        placeholder="Пароль"
+                        onChangeText={handleChange("password")}
+                        onFocus={() => setPasswordFocus(true)}
+                        onBlur={() => setPasswordFocus(false)}
+                      />
                       <TouchableOpacity
-                        onPress={() => navigation.navigate("Login")}
+                        style={styles.textInInput}
+                        onPress={handleVisiblePassword}
                       >
-                        <Text style={styles.linkText}>Увійти</Text>
+                        <Text>Показати</Text>
                       </TouchableOpacity>
                     </View>
-                  </>
-                </View>
-              )}
-            </Formik>
-          </KeyboardAvoidingView>
-        </View>
-      </TouchableWithoutFeedback>
+                    <>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={styles.buttonText}>Зареєструватися</Text>
+                      </TouchableOpacity>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.textafterbutton}>
+                          Вже є акаунт?
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => navigation.navigate("Login")}
+                        >
+                          <Text style={styles.linkText}>Увійти</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </>
+                  </View>
+                )}
+              </Formik>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     </ImageBackground>
   );

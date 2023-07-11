@@ -25,6 +25,7 @@ export const FormLogin = () => {
   const navigation = useNavigation();
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
+  const [isVisiblePassword, setIsVisiblePassword] = useState(true)
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
@@ -37,6 +38,12 @@ export const FormLogin = () => {
   const initialValue = {
     email: "",
     password: "",
+  };
+
+  const handleVisiblePassword = () => {
+  isVisiblePassword
+    ? setIsVisiblePassword(false)
+    : setIsVisiblePassword(true);
   };
 
   return (
@@ -75,13 +82,18 @@ export const FormLogin = () => {
                           passwordFocus && styles.inputFocused,
                         ]}
                         value={values.password}
-                        secureTextEntry
+                        secureTextEntry={isVisiblePassword}
                         placeholder="Пароль"
                         onChangeText={handleChange("password")}
                         onFocus={() => setPasswordFocus(true)}
                         onBlur={() => setPasswordFocus(false)}
                       />
-                      <Text style={styles.textInInput}>Показати</Text>
+                      <TouchableOpacity
+                        style={styles.textInInput}
+                        onPress={handleVisiblePassword}
+                      >
+                        <Text>Показати</Text>
+                      </TouchableOpacity>
                     </View>
                     <>
                       <TouchableOpacity
