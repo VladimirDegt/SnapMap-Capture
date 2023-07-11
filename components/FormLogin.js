@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Formik } from "formik";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -11,6 +12,7 @@ import {
   Keyboard,
   TouchableOpacity,
   Linking,
+  ImageBackground,
 } from "react-native";
 
 import {
@@ -20,6 +22,7 @@ import {
 } from "@expo-google-fonts/roboto";
 
 export const FormLogin = () => {
+  const navigation = useNavigation();
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   let [fontsLoaded] = useFonts({
@@ -36,68 +39,89 @@ export const FormLogin = () => {
     password: "",
   };
 
-  const handleLoginPress = () => {
-    Linking.openURL("https://Home");
-  };
-
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.rectangle}>
-        <Text style={styles.title}>Увійти</Text>
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-        >
-          <Formik
-            initialValues={initialValue}
-            onSubmit={(values) => console.log(values)}
-          >
-            {({ handleChange, handleSubmit, values }) => (
-              <View>
-                <TextInput
-                  style={[styles.input, emailFocus && styles.inputFocused]}
-                  value={values.email}
-                  placeholder="Адреса електронної пошти"
-                  onChangeText={handleChange("email")}
-                  onFocus={() => setEmailFocus(true)}
-                  onBlur={() => setEmailFocus(false)}
-                />
-                <View style={styles.containerInput}>
-                  <TextInput
-                    style={[styles.input, passwordFocus && styles.inputFocused]}
-                    value={values.password}
-                    secureTextEntry
-                    placeholder="Пароль"
-                    onChangeText={handleChange("password")}
-                    onFocus={() => setPasswordFocus(true)}
-                    onBlur={() => setPasswordFocus(false)}
-                  />
-                  <Text style={styles.textInInput}>Показати</Text>
-                </View>
-                <>
-                  <TouchableOpacity
-                    style={styles.button}
-                    onPress={handleSubmit}
-                  >
-                    <Text style={styles.buttonText}>Увійти</Text>
-                  </TouchableOpacity>
-
-                  <View style={styles.rowContainer}>
-                    <Text style={styles.textafterbutton}>Немає акаунту?</Text>
-                    <TouchableOpacity onPress={handleLoginPress}>
-                      <Text style={styles.linkText}>Зареєструватися</Text>
-                    </TouchableOpacity>
+    <ImageBackground
+      source={require("../assets/PhotoBG.jpg")}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.rectangle}>
+            <Text style={styles.title}>Увійти</Text>
+            <KeyboardAvoidingView
+              behavior={Platform.OS == "ios" ? "padding" : "height"}
+            >
+              <Formik
+                initialValues={initialValue}
+                onSubmit={(values) => {
+                  console.log(values);
+                  navigation.navigate("Home");
+                }}
+              >
+                {({ handleChange, handleSubmit, values }) => (
+                  <View>
+                    <TextInput
+                      style={[styles.input, emailFocus && styles.inputFocused]}
+                      value={values.email}
+                      placeholder="Адреса електронної пошти"
+                      onChangeText={handleChange("email")}
+                      onFocus={() => setEmailFocus(true)}
+                      onBlur={() => setEmailFocus(false)}
+                    />
+                    <View style={styles.containerInput}>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          passwordFocus && styles.inputFocused,
+                        ]}
+                        value={values.password}
+                        secureTextEntry
+                        placeholder="Пароль"
+                        onChangeText={handleChange("password")}
+                        onFocus={() => setPasswordFocus(true)}
+                        onBlur={() => setPasswordFocus(false)}
+                      />
+                      <Text style={styles.textInInput}>Показати</Text>
+                    </View>
+                    <>
+                      <TouchableOpacity
+                        style={styles.button}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={styles.buttonText}>Увійти</Text>
+                      </TouchableOpacity>
+                      <View style={styles.rowContainer}>
+                        <Text style={styles.textafterbutton}>
+                          Немає акаунту?
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => navigation.navigate("Registration")}
+                        >
+                          <Text style={styles.linkText}>Зареєструватися</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </>
                   </View>
-                </>
-              </View>
-            )}
-          </Formik>
-        </KeyboardAvoidingView>
+                )}
+              </Formik>
+            </KeyboardAvoidingView>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
-    </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
   framePhoto: {
     width: 132,
     height: 120,
