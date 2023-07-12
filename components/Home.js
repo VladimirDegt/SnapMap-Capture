@@ -1,7 +1,10 @@
-import { Text } from "react-native"
+import { useRoute } from "@react-navigation/native";
+import { PostsScreen } from "../Screens/PostsScreen";
 
 export const Home = () => {
-    return (
-        <Text>Hello</Text>
-    )
-}
+  const {
+    params: { values },
+    } = useRoute();
+    
+  return <PostsScreen values={values} />;
+};

@@ -11,7 +11,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  Linking,
   ImageBackground,
 } from "react-native";
 
@@ -61,8 +60,7 @@ export const FormLogin = () => {
               <Formik
                 initialValues={initialValue}
                 onSubmit={(values) => {
-                  console.log(values);
-                  navigation.navigate("Home");
+                  navigation.navigate("Home", {values});
                 }}
               >
                 {({ handleChange, handleSubmit, values }) => (

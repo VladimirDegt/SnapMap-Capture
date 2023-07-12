@@ -12,8 +12,6 @@ import {
   Keyboard,
   TouchableOpacity,
   Image,
-  Linking,
-  Button,
   ImageBackground,
 } from "react-native";
 
@@ -75,7 +73,9 @@ export const FormRegistr = () => {
             >
               <Formik
                 initialValues={initialValue}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={(values) => {
+                  navigation.navigate("Home", { values });
+                }}
               >
                 {({ handleChange, handleSubmit, values }) => (
                   <View>
