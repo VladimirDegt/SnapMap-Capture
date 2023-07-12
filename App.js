@@ -5,7 +5,6 @@ import { StyleSheet } from "react-native";
 import { FormRegistr } from "./components/FormRegistr";
 import { FormLogin } from "./components/FormLogin";
 import { Home } from "./components/Home";
-import { Button } from "react-native";
 import { Image } from "react-native";
 import { TouchableOpacity } from "react-native";
 
@@ -15,8 +14,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <MainStack.Navigator initialRouteName="Login">
-        <MainStack.Screen name="Registration" component={FormRegistr} />
-        <MainStack.Screen name="Login" component={FormLogin} />
+        <MainStack.Screen
+          name="Registration"
+          component={FormRegistr}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Login"
+          component={FormLogin}
+          options={{ headerShown: false }}
+        />
         <MainStack.Screen
           name="Home"
           component={Home}

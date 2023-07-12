@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderWidth: 1,
     borderColor: "#FF6C00",
-    backgroundColor: "FFFFFF",
+    backgroundColor: "#FFFFFF",
   },
   containerInput: {
     position: "relative",

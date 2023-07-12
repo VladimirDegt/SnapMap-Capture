@@ -5,8 +5,12 @@ import {
   Roboto_400Regular,
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
+import { useRoute } from "@react-navigation/native";
 
-export const PostsScreen = ({ values }) => {
+export const PostsScreen = () => {
+  const route = useRoute();
+  const { values } = route.params;
+
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
@@ -23,7 +27,9 @@ export const PostsScreen = ({ values }) => {
         style={styles.photoUser}
       />
       <View style={styles.containerUser}>
-        <Text style={styles.nameUser}>{values.login ? values.login : "Поки не відомо"}</Text>
+        <Text style={styles.nameUser}>
+          {values.login ? values.login : "Поки не відомо"}
+        </Text>
         <Text style={styles.emailUser}>{values.email}</Text>
       </View>
     </View>
