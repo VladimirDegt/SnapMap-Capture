@@ -20,6 +20,7 @@ export const PostsScreen = () => {
   if (!fontsLoaded) {
     return null;
   }
+
   return (
     <View style={styles.containerPost}>
       <Image
@@ -28,7 +29,7 @@ export const PostsScreen = () => {
       />
       <View style={styles.containerUser}>
         <Text style={styles.nameUser}>
-          {values.login ? values.login : "Поки не відомо"}
+          {values.login ? values.login : "Ім'я прийде з бекенду"}
         </Text>
         <Text style={styles.emailUser}>{values.email}</Text>
       </View>
@@ -41,9 +42,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "flex-start",
-    marginLeft: 16,
-    marginTop: 32,
+    paddingTop: 32,
+    paddingLeft: 16,
     gap: 8,
+    backgroundColor: "#FFFFFF",
   },
   photoUser: {
     borderRadius: 16,

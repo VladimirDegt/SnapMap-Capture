@@ -3,8 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { PostsScreen } from "../Screens/PostsScreen";
 import { CreatePostsScreen } from "../Screens/CreatePostsScreen";
 import { ProfileScreen } from "../Screens/ProfileScreen";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
+import { Image } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,8 +21,22 @@ export const Home = () => {
         name="PostsScreen"
         component={PostsScreen}
         options={{
+          title: "Публікації",
+          headerTintColor: "#212121",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontWeight: "medium",
+            fontSize: 17,
+          },
           tabBarLabel: () => null,
-          headerShown: false,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => console.log("Logout")}>
+              <Image
+                source={require("../assets/log-out.png")}
+                style={styles.logOutBtn}
+              />
+            </TouchableOpacity>
+          ),
           tabBarIcon: ({ focused, color, size }) => (
             <View
               style={[
@@ -42,8 +58,14 @@ export const Home = () => {
         name="CreatePostsScreen"
         component={CreatePostsScreen}
         options={{
+          title: "Створити публікацію",
+          headerTintColor: "#212121",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontWeight: "medium",
+            fontSize: 17,
+          },
           tabBarLabel: () => null,
-          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <View
               style={[
@@ -64,8 +86,14 @@ export const Home = () => {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
+          title: "Не зрозуміло що це за екран",
+          headerTintColor: "#212121",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontWeight: "medium",
+            fontSize: 17,
+          },
           tabBarLabel: () => null,
-          headerShown: false,
           tabBarIcon: ({ focused, color, size }) => (
             <View
               style={[
@@ -82,7 +110,7 @@ export const Home = () => {
           ),
         }}
       />
-    </Tab.Navigator>
+      </Tab.Navigator>
   );
 };
 
@@ -91,6 +119,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  logOutBtn: {
+    width: 24,
+    height: 24,
+    marginRight: 10,
   },
   tabIconContainerPosts: {
     width: 40,
