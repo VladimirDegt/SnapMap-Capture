@@ -9,7 +9,10 @@ import { useRoute } from "@react-navigation/native";
 
 export const PostsScreen = () => {
   const route = useRoute();
-  const { values } = route.params;
+  const { values, nameLocation, photo, location } = route.params;
+  console.log('location', location);
+  console.log('photo', photo);
+  console.log('nameLocation', nameLocation);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,

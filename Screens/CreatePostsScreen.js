@@ -6,12 +6,12 @@ import {
   Text,
   TextInput,
   View,
+  Image,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  ImageBackground,
 } from "react-native";
 import {
   useFonts,
@@ -20,19 +20,22 @@ import {
   Roboto_700Bold,
 } from "@expo-google-fonts/roboto";
 import { FontAwesome } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons"; 
-import { AntDesign } from "@expo/vector-icons"; 
+import { EvilIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
-import { Image } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import * as Location from "expo-location";
 
 export const CreatePostsScreen = () => {
   const navigation = useNavigation();
   const [nameFocus, setNameFocus] = useState(false);
   const [regionFocus, setRegionFocus] = useState(false);
   const [camera, setCamera] = useState(null);
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [locationReady, setLocationReady] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -43,22 +46,40 @@ export const CreatePostsScreen = () => {
     })();
   }, []);
 
-  if (hasPermission === null) {
-    return <View />;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
-  
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+      setLocationReady(true);
+    })();
+  }, []);
+
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
     Roboto_700Bold,
   });
 
+  if (hasPermission === null) {
+    return <View />;
+  };
+
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  };
+
   if (!fontsLoaded) {
     return null;
-  }
+  };
 
   const initialValue = {
     name: "",
@@ -67,9 +88,8 @@ export const CreatePostsScreen = () => {
 
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
-    console.log("camera -->", photo.uri);
     setPhoto(photo.uri);
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -100,7 +120,12 @@ export const CreatePostsScreen = () => {
             <Formik
               initialValues={initialValue}
               onSubmit={(values) => {
-                navigation.navigate("Home", { values });
+                if (!locationReady) {
+                  console.log("Location data is not ready yet");
+                  return;
+                };
+                const nameLocation = values;
+                navigation.navigate("PostsScreen", { nameLocation, location, photo });
               }}
             >
               {({ handleChange, handleSubmit, values }) => (
@@ -133,10 +158,11 @@ export const CreatePostsScreen = () => {
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-                    style={styles.button}
+                    style={[styles.button, location && photo && styles.buttonActive]}
                     onPress={handleSubmit}
+                    disabled={!photo}
                   >
-                    <Text style={styles.buttonText}>Опублікувати</Text>
+                    <Text style={[styles.buttonText, location && photo && styles.buttonTextActive]}>Опублікувати</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -246,11 +272,17 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     backgroundColor: "#F6F6F6",
   },
+  buttonActive: {
+    backgroundColor: "#FF6C00",
+  },
   buttonText: {
     fontFamily: "Roboto_400Regular",
     color: "#BDBDBD",
     fontSize: 16,
     textAlign: "center",
+  },
+  buttonTextActive: {
+    color: "#FFFFFF",
   },
   iconDelete: {
     width: 70,
