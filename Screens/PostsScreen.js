@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
   useFonts,
@@ -10,11 +10,9 @@ import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 
 export const PostsScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const { values, nameLocation, photo, location } = route.params;
-  console.log('location', location);
-  console.log('photo', photo);
-  console.log('nameLocation', nameLocation);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -25,6 +23,13 @@ export const PostsScreen = () => {
   if (!fontsLoaded) {
     return null;
   }
+
+  const handleComment = () => {
+    navigation.navigate('Comments', { photo });
+  };
+  const handleLocation = () => {
+    navigation.navigate('Map', { location });
+  };
 
   return (
     <View style={styles.container}>
@@ -55,14 +60,17 @@ export const PostsScreen = () => {
               <View style={styles.containerComments}>
                 <TouchableOpacity
                   style={styles.containerIconComment}
-                  // onPress={handleComment}
+                  onPress={handleComment}
                 >
                   <FontAwesome name="comment-o" size={24} color="#BDBDBD" />
                 </TouchableOpacity>
                 <Text style={styles.textComment}>0</Text>
               </View>
               <View style={styles.containerLocation}>
-                <TouchableOpacity style={styles.iconLocation}>
+                <TouchableOpacity
+                  style={styles.iconLocation}
+                  onPress={handleLocation}
+                >
                   <EvilIcons name="location" size={24} color="#BDBDBD" />
                 </TouchableOpacity>
                 <Text style={styles.textLocation}>{nameLocation.region}</Text>
