@@ -19,7 +19,6 @@ export const MapScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { location } = route.params;
-  console.log('location', location);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
