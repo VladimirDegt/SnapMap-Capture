@@ -1,6 +1,6 @@
-import { Formik } from "formik";
-import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { Formik } from 'formik';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,27 +12,27 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native';
 import {
   useFonts,
   Roboto_500Medium,
   Roboto_400Regular,
   Roboto_700Bold,
-} from "@expo-google-fonts/roboto";
-import { FontAwesome } from "@expo/vector-icons";
-import { EvilIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { Camera } from "expo-camera";
-import * as MediaLibrary from "expo-media-library";
-import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
+} from '@expo-google-fonts/roboto';
+import { FontAwesome } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { Camera } from 'expo-camera';
+import * as MediaLibrary from 'expo-media-library';
+import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export const CreatePostsScreen = () => {
   const navigation = useNavigation();
   const [nameFocus, setNameFocus] = useState(false);
   const [regionFocus, setRegionFocus] = useState(false);
   const [camera, setCamera] = useState(null);
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState('');
   const [hasPermission, setHasPermission] = useState(null);
   const [location, setLocation] = useState(null);
   const [locationReady, setLocationReady] = useState(false);
@@ -42,15 +42,15 @@ export const CreatePostsScreen = () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
 
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     })();
   }, []);
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
       }
 
       let location = await Location.getCurrentPositionAsync({});
@@ -71,24 +71,31 @@ export const CreatePostsScreen = () => {
 
   if (hasPermission === null) {
     return <View />;
-  };
+  }
 
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
-  };
+  }
 
   if (!fontsLoaded) {
     return null;
-  };
+  }
 
   const initialValue = {
-    name: "",
-    region: "",
+    name: '',
+    region: '',
   };
 
   const takePhoto = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
+  };
+
+  const handleDelete = () => {
+    setPhoto('');
+    setLocation(null);
+    setNameFocus(false);
+    setRegionFocus(false);
   };
 
   return (
@@ -115,17 +122,22 @@ export const CreatePostsScreen = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.rectangle}>
           <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
           >
             <Formik
               initialValues={initialValue}
-              onSubmit={(values) => {
+              onSubmit={(values, { resetForm }) => {
                 if (!locationReady) {
-                  console.log("Location data is not ready yet");
+                  console.log('Location data is not ready yet');
                   return;
-                };
+                }
                 const nameLocation = values;
-                navigation.navigate("PostsScreen", { nameLocation, location, photo });
+                resetForm();
+                navigation.navigate('PostsScreen', {
+                  nameLocation,
+                  location,
+                  photo,
+                });
               }}
             >
               {({ handleChange, handleSubmit, values }) => (
@@ -134,7 +146,7 @@ export const CreatePostsScreen = () => {
                     style={[styles.input, nameFocus && styles.inputFocused]}
                     value={values.name}
                     placeholder="Назва..."
-                    onChangeText={handleChange("name")}
+                    onChangeText={handleChange('name')}
                     onFocus={() => setNameFocus(true)}
                     onBlur={() => setNameFocus(false)}
                   />
@@ -146,23 +158,30 @@ export const CreatePostsScreen = () => {
                       ]}
                       value={values.region}
                       placeholder="Місцевість..."
-                      onChangeText={handleChange("region")}
+                      onChangeText={handleChange('region')}
                       onFocus={() => setRegionFocus(true)}
                       onBlur={() => setRegionFocus(false)}
                     />
-                    <TouchableOpacity
-                      style={styles.iconLocation}
-                      // onPress={handleVisiblePassword}
-                    >
+                    <TouchableOpacity style={styles.iconLocation}>
                       <EvilIcons name="location" size={24} color="#BDBDBD" />
                     </TouchableOpacity>
                   </View>
                   <TouchableOpacity
-                    style={[styles.button, location && photo && styles.buttonActive]}
+                    style={[
+                      styles.button,
+                      location && photo && styles.buttonActive,
+                    ]}
                     onPress={handleSubmit}
                     disabled={!photo}
                   >
-                    <Text style={[styles.buttonText, location && photo && styles.buttonTextActive]}>Опублікувати</Text>
+                    <Text
+                      style={[
+                        styles.buttonText,
+                        location && photo && styles.buttonTextActive,
+                      ]}
+                    >
+                      Опублікувати
+                    </Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -170,7 +189,7 @@ export const CreatePostsScreen = () => {
           </KeyboardAvoidingView>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableOpacity style={styles.iconDelete}>
+      <TouchableOpacity style={styles.iconDelete} onPress={handleDelete}>
         <AntDesign name="delete" size={24} color="#BDBDBD" />
       </TouchableOpacity>
     </View>
@@ -179,12 +198,12 @@ export const CreatePostsScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 32,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
   },
   containerPhoto: {
     marginBottom: 32,
@@ -192,7 +211,7 @@ const styles = StyleSheet.create({
   photo: {
     height: 240,
     borderRadius: 8,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
     marginBottom: 8,
   },
   camera: {
@@ -200,34 +219,34 @@ const styles = StyleSheet.create({
   },
   containerIcon: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 90,
     marginBottom: 90,
-    marginLeft: "auto",
-    marginRight: "auto",
+    marginLeft: 'auto',
+    marginRight: 'auto',
     width: 60,
     height: 60,
     borderRadius: 50,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
   },
   takePhotoContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 10,
     left: 10,
-    borderColor: "#ffffff",
+    borderColor: '#ffffff',
     borderWidth: 1,
   },
   textUnderPhoto: {
-    fontFamily: "Roboto_400Regular",
+    fontFamily: 'Roboto_400Regular',
     fontSize: 16,
-    color: "#BDBDBD",
+    color: '#BDBDBD',
   },
   rectanglePhoto: {
     width: 120,
     height: 120,
     borderRadius: 16,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
   },
   input: {
     paddingTop: 16,
@@ -235,10 +254,10 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E8E8",
+    borderBottomColor: '#E8E8E8',
     fontSize: 16,
-    fontFamily: "Roboto_400Regular",
-    placeholderTextColor: "#BDBDBD",
+    fontFamily: 'Roboto_400Regular',
+    placeholderTextColor: '#BDBDBD',
     borderRadius: 8,
   },
   inputRegion: {
@@ -247,22 +266,22 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E8E8",
+    borderBottomColor: '#E8E8E8',
     fontSize: 16,
-    fontFamily: "Roboto_400Regular",
-    placeholderTextColor: "#BDBDBD",
+    fontFamily: 'Roboto_400Regular',
+    placeholderTextColor: '#BDBDBD',
     borderRadius: 8,
   },
   inputFocused: {
     borderWidth: 1,
-    borderColor: "#FF6C00",
-    backgroundColor: "FFFFFF",
+    borderColor: '#FF6C00',
+    backgroundColor: 'FFFFFF',
   },
   containerInput: {
-    position: "relative",
+    position: 'relative',
   },
   iconLocation: {
-    position: "absolute",
+    position: 'absolute',
     top: 22,
   },
   button: {
@@ -270,19 +289,19 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     paddingTop: 16,
     paddingBottom: 16,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
   },
   buttonActive: {
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
   },
   buttonText: {
-    fontFamily: "Roboto_400Regular",
-    color: "#BDBDBD",
+    fontFamily: 'Roboto_400Regular',
+    color: '#BDBDBD',
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
   },
   buttonTextActive: {
-    color: "#FFFFFF",
+    color: '#FFFFFF',
   },
   iconDelete: {
     width: 70,
@@ -290,10 +309,10 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 23,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: "auto",
-    backgroundColor: "#F6F6F6",
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 'auto',
+    backgroundColor: '#F6F6F6',
     borderRadius: 20,
   },
 });
