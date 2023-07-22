@@ -24,14 +24,16 @@ export const loginDB = async ({ email, password }) => {
   }
 };
 
-export const updateUserProfile = async update => {
+export const updateUserProfile = async (name, url) => {
   const user = auth.currentUser;
-
   // якщо такий користувач знайдений
   if (user) {
     // оновлюємо його профайл
     try {
-      await updateProfile(user, update);
+      await updateProfile(user, {
+        displayName: name,
+        photoURL: url,
+      });
     } catch (error) {
       throw error;
     }

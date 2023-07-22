@@ -8,6 +8,9 @@ import {
 } from '@expo-google-fonts/roboto';
 import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
+// import { auth } from '../config';
+
+// console.log(auth.currentUser);
 
 export const PostsScreen = () => {
   const navigation = useNavigation();
@@ -39,9 +42,7 @@ export const PostsScreen = () => {
           style={styles.photoUser}
         />
         <View style={styles.user}>
-          <Text style={styles.nameUser}>
-            {values.login ? values.login : "Ім'я прийде з бекенду"}
-          </Text>
+          <Text style={styles.nameUser}>"Ім'я прийде з бекенду"</Text>
           <Text style={styles.emailUser}>{values.email}</Text>
         </View>
       </View>
@@ -54,7 +55,7 @@ export const PostsScreen = () => {
               style={{ height: '100%', width: '100%' }}
             />
           </View>
-          <Text style={styles.nameLocation}>{nameLocation.name}</Text>
+          <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
           <View style={styles.containerDetails}>
             <View style={styles.containerDetailsRow}>
               <View style={styles.containerComments}>
@@ -73,7 +74,7 @@ export const PostsScreen = () => {
                 >
                   <EvilIcons name="location" size={24} color="#BDBDBD" />
                 </TouchableOpacity>
-                <Text style={styles.textLocation}>{nameLocation.region}</Text>
+                <Text style={styles.textLocation}>{nameLocation?.region}</Text>
               </View>
             </View>
           </View>

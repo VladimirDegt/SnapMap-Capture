@@ -20,6 +20,7 @@ import {
   Roboto_400Regular,
 } from '@expo-google-fonts/roboto';
 import { registerDB } from '../utils/auth';
+import { updateUserProfile } from '../utils/auth';
 
 export const FormRegistr = () => {
   const [loginFocus, setLoginFocus] = useState(false);
@@ -75,6 +76,7 @@ export const FormRegistr = () => {
                 initialValues={initialValue}
                 onSubmit={values => {
                   registerDB(values);
+                  updateUserProfile(values.login, '../assets/PhotoUser.jpg');
                   navigation.navigate('Home', { values });
                 }}
               >
@@ -213,7 +215,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     fontSize: 16,
     fontFamily: 'Roboto_400Regular',
-    placeholderTextColor: '#BDBDBD',
   },
   inputFocused: {
     borderWidth: 1,

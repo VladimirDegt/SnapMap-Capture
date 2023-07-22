@@ -1,4 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { onAuthStateChanged } from 'firebase/auth';
+import { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { PostsScreen } from '../Screens/PostsScreen';
 import { CreatePostsScreen } from '../Screens/CreatePostsScreen';
@@ -7,14 +9,36 @@ import { StyleSheet, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { Image } from 'react-native';
+import { auth } from '../config';
 
 const Tab = createBottomTabNavigator();
 
+onAuthStateChanged(auth, user => {
+  if (user) {
+    const uid = user.uid;
+    console.log('user is signed in');
+
+    // navigation.navigate('PostsScreen');
+  } else {
+    console.log('user is signed out');
+  }
+});
+
 export const Home = () => {
   const navigation = useNavigation();
+
   const {
     params: { values },
   } = useRoute();
+
+  const handleSignOut = async () => {
+    try {
+      await auth.signOut();
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
 
   return (
     <Tab.Navigator>
@@ -31,7 +55,7 @@ export const Home = () => {
           },
           tabBarLabel: () => null,
           headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity onPress={handleSignOut}>
               <Image
                 source={require('../assets/log-out.png')}
                 style={styles.logOutBtn}

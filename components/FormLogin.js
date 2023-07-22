@@ -197,12 +197,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#F6F6F6',
     fontSize: 16,
     fontFamily: 'Roboto_400Regular',
-    placeholderTextColor: '#BDBDBD',
   },
   inputFocused: {
     borderWidth: 1,
     borderColor: '#FF6C00',
-    backgroundColor: 'FFFFFF',
+    backgroundColor: '#FFFFFF',
   },
   containerInput: {
     position: 'relative',

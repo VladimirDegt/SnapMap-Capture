@@ -257,7 +257,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E8E8E8',
     fontSize: 16,
     fontFamily: 'Roboto_400Regular',
-    placeholderTextColor: '#BDBDBD',
     borderRadius: 8,
   },
   inputRegion: {
@@ -269,13 +268,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#E8E8E8',
     fontSize: 16,
     fontFamily: 'Roboto_400Regular',
-    placeholderTextColor: '#BDBDBD',
     borderRadius: 8,
   },
   inputFocused: {
     borderWidth: 1,
     borderColor: '#FF6C00',
-    backgroundColor: 'FFFFFF',
+    backgroundColor: '#FFFFFF',
   },
   containerInput: {
     position: 'relative',

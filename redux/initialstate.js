@@ -1,3 +1,4 @@
 export const initialState = {
-  userName: '',
+  name: '',
+  email: '',
 };
