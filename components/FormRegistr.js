@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -21,6 +22,7 @@ import {
 } from '@expo-google-fonts/roboto';
 import { registerDB } from '../utils/auth';
 import { updateUserProfile } from '../utils/auth';
+import { addUser } from '../redux/reduser';
 
 export const FormRegistr = () => {
   const [loginFocus, setLoginFocus] = useState(false);
@@ -48,6 +50,8 @@ export const FormRegistr = () => {
       ? setIsVisiblePassword(false)
       : setIsVisiblePassword(true);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <ImageBackground
@@ -77,6 +81,7 @@ export const FormRegistr = () => {
                 onSubmit={values => {
                   registerDB(values);
                   updateUserProfile(values.login, '../assets/PhotoUser.jpg');
+                  dispatch(addUser(values));
                   navigation.navigate('Home', { values });
                 }}
               >

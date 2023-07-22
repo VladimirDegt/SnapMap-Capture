@@ -8,14 +8,17 @@ import {
 } from '@expo-google-fonts/roboto';
 import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
-// import { auth } from '../config';
-
-// console.log(auth.currentUser);
+import { useSelector } from 'react-redux';
+import { selectEmail, selectLogin } from '../redux/selectors';
 
 export const PostsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { values, nameLocation, photo, location } = route.params;
+
+  const login = useSelector(selectLogin);
+  const email = useSelector(selectEmail);
+
+  const { nameLocation, photo, location } = route.params;
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -42,8 +45,8 @@ export const PostsScreen = () => {
           style={styles.photoUser}
         />
         <View style={styles.user}>
-          <Text style={styles.nameUser}>"Ім'я прийде з бекенду"</Text>
-          <Text style={styles.emailUser}>{values.email}</Text>
+          <Text style={styles.nameUser}>{login}</Text>
+          <Text style={styles.emailUser}>{email}</Text>
         </View>
       </View>
 
