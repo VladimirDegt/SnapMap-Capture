@@ -24,8 +24,8 @@ import { EvilIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { writeDataToFirestore } from '../utils/db';
 
 export const CreatePostsScreen = () => {
   const navigation = useNavigation();
@@ -132,6 +132,7 @@ export const CreatePostsScreen = () => {
                   return;
                 }
                 const nameLocation = values;
+                writeDataToFirestore(nameLocation, location, photo);
                 resetForm();
                 navigation.navigate('PostsScreen', {
                   nameLocation,
