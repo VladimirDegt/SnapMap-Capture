@@ -1,5 +1,14 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import {
+  Image,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {
   useFonts,
   Roboto_500Medium,
@@ -8,17 +17,25 @@ import {
 } from '@expo-google-fonts/roboto';
 import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 import { selectEmail, selectLogin } from '../redux/selectors';
+import { getDataFromFirestore } from '../utils/db';
 
 export const PostsScreen = () => {
+  const [getPosts, setGetPosts] = useState('');
   const navigation = useNavigation();
   const route = useRoute();
 
   const login = useSelector(selectLogin);
   const email = useSelector(selectEmail);
 
-  const { nameLocation, photo, location } = route.params;
+  useEffect(() => {
+    const fetchData = async () => {
+      const posts = await getDataFromFirestore();
+      setGetPosts(posts);
+    };
+
+    fetchData();
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -30,10 +47,10 @@ export const PostsScreen = () => {
     return null;
   }
 
-  const handleComment = () => {
+  const handleComment = photo => {
     navigation.navigate('Comments', { photo });
   };
-  const handleLocation = () => {
+  const handleLocation = location => {
     navigation.navigate('Map', { location });
   };
 
@@ -49,40 +66,50 @@ export const PostsScreen = () => {
           <Text style={styles.emailUser}>{email}</Text>
         </View>
       </View>
-
-      {photo && (
-        <View style={styles.containerPost}>
-          <View style={styles.photo}>
-            <Image
-              source={{ uri: photo }}
-              style={{ height: '100%', width: '100%' }}
-            />
-          </View>
-          <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
-          <View style={styles.containerDetails}>
-            <View style={styles.containerDetailsRow}>
-              <View style={styles.containerComments}>
-                <TouchableOpacity
-                  style={styles.containerIconComment}
-                  onPress={handleComment}
-                >
-                  <FontAwesome name="comment-o" size={24} color="#BDBDBD" />
-                </TouchableOpacity>
-                <Text style={styles.textComment}>0</Text>
-              </View>
-              <View style={styles.containerLocation}>
-                <TouchableOpacity
-                  style={styles.iconLocation}
-                  onPress={handleLocation}
-                >
-                  <EvilIcons name="location" size={24} color="#BDBDBD" />
-                </TouchableOpacity>
-                <Text style={styles.textLocation}>{nameLocation?.region}</Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      )}
+      <ScrollView contentContainerStyle={styles.containerPost}>
+        {getPosts &&
+          getPosts.map(({ id, location, nameLocation, photo }) => {
+            return (
+              <>
+                <View style={styles.photo} key={id}>
+                  <Image
+                    source={{ uri: photo }}
+                    style={{ height: '100%', width: '100%' }}
+                  />
+                </View>
+                <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
+                <View style={styles.containerDetails}>
+                  <View style={styles.containerDetailsRow}>
+                    <View style={styles.containerComments}>
+                      <TouchableOpacity
+                        style={styles.containerIconComment}
+                        onPress={photo => handleComment(photo)}
+                      >
+                        <FontAwesome
+                          name="comment-o"
+                          size={24}
+                          color="#BDBDBD"
+                        />
+                      </TouchableOpacity>
+                      <Text style={styles.textComment}>0</Text>
+                    </View>
+                    <View style={styles.containerLocation}>
+                      <TouchableOpacity
+                        style={styles.iconLocation}
+                        onPress={location => handleLocation(location)}
+                      >
+                        <EvilIcons name="location" size={24} color="#BDBDBD" />
+                      </TouchableOpacity>
+                      <Text style={styles.textLocation}>
+                        {nameLocation?.region}
+                      </Text>
+                    </View>
+                  </View>
+                </View>
+              </>
+            );
+          })}
+      </ScrollView>
     </View>
   );
 };

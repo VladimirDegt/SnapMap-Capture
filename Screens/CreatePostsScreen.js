@@ -126,19 +126,15 @@ export const CreatePostsScreen = () => {
           >
             <Formik
               initialValues={initialValue}
-              onSubmit={(values, { resetForm }) => {
+              onSubmit={async (values, { resetForm }) => {
                 if (!locationReady) {
                   console.log('Location data is not ready yet');
                   return;
                 }
                 const nameLocation = values;
-                writeDataToFirestore(nameLocation, location, photo);
+                await writeDataToFirestore(nameLocation, location, photo);
                 resetForm();
-                navigation.navigate('PostsScreen', {
-                  nameLocation,
-                  location,
-                  photo,
-                });
+                navigation.navigate('PostsScreen');
               }}
             >
               {({ handleChange, handleSubmit, values }) => (
