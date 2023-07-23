@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
@@ -23,7 +23,6 @@ import { getDataFromFirestore } from '../utils/db';
 export const PostsScreen = () => {
   const [getPosts, setGetPosts] = useState('');
   const navigation = useNavigation();
-  const route = useRoute();
 
   const login = useSelector(selectLogin);
   const email = useSelector(selectEmail);
@@ -47,11 +46,12 @@ export const PostsScreen = () => {
     return null;
   }
 
-  const handleComment = photo => {
-    navigation.navigate('Comments', { photo });
-  };
-  const handleLocation = location => {
+  const handleLocation = (e, location) => {
     navigation.navigate('Map', { location });
+  };
+
+  const handleCommentAdd = (e, id) => {
+    navigation.navigate('Comments', { id });
   };
 
   return (
@@ -68,7 +68,7 @@ export const PostsScreen = () => {
       </View>
       <ScrollView contentContainerStyle={styles.containerPost}>
         {getPosts &&
-          getPosts.map(({ id, location, nameLocation, photo }) => {
+          getPosts.map(({ id, location, nameLocation, photo, comments }) => {
             return (
               <>
                 <View style={styles.photo} key={id}>
@@ -83,20 +83,20 @@ export const PostsScreen = () => {
                     <View style={styles.containerComments}>
                       <TouchableOpacity
                         style={styles.containerIconComment}
-                        onPress={photo => handleComment(photo)}
+                        onPress={e => handleCommentAdd(e, id)}
                       >
                         <FontAwesome
                           name="comment-o"
                           size={24}
-                          color="#BDBDBD"
+                          color={comments.length > 0 ? 'red' : '#BDBDBD'}
                         />
                       </TouchableOpacity>
-                      <Text style={styles.textComment}>0</Text>
+                      <Text style={styles.textComment}>{comments.length}</Text>
                     </View>
                     <View style={styles.containerLocation}>
                       <TouchableOpacity
                         style={styles.iconLocation}
-                        onPress={location => handleLocation(location)}
+                        onPress={e => handleLocation(e, location)}
                       >
                         <EvilIcons name="location" size={24} color="#BDBDBD" />
                       </TouchableOpacity>
