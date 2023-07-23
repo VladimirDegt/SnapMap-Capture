@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import {
   Image,
@@ -17,15 +16,11 @@ import {
 } from '@expo-google-fonts/roboto';
 import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
-import { selectEmail, selectLogin } from '../redux/selectors';
 import { getDataFromFirestore } from '../utils/db';
 
 export const PostsScreen = () => {
   const [getPosts, setGetPosts] = useState('');
   const navigation = useNavigation();
-
-  const login = useSelector(selectLogin);
-  const email = useSelector(selectEmail);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,29 +51,29 @@ export const PostsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerUser}>
-        <Image
-          source={require('../assets/PhotoUser.jpg')}
-          style={styles.photoUser}
-        />
-        <View style={styles.user}>
-          <Text style={styles.nameUser}>{login}</Text>
-          <Text style={styles.emailUser}>{email}</Text>
-        </View>
-      </View>
       <ScrollView contentContainerStyle={styles.containerPost}>
         {getPosts &&
-          getPosts.map(({ id, location, nameLocation, photo, comments }) => {
-            return (
-              <>
-                <View style={styles.photo} key={id}>
-                  <Image
-                    source={{ uri: photo }}
-                    style={{ height: '100%', width: '100%' }}
-                  />
-                </View>
-                <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
-                <View style={styles.containerDetails}>
+          getPosts.map(
+            ({ id, location, nameLocation, photo, comments, login, email }) => {
+              return (
+                <View key={id}>
+                  <View style={styles.containerUser}>
+                    <Image
+                      source={require('../assets/PhotoUser.jpg')}
+                      style={styles.photoUser}
+                    />
+                    <View style={styles.user}>
+                      <Text style={styles.nameUser}>{login}</Text>
+                      <Text style={styles.emailUser}>{email}</Text>
+                    </View>
+                  </View>
+                  <View style={styles.photo}>
+                    <Image
+                      source={{ uri: photo }}
+                      style={{ height: '100%', width: '100%' }}
+                    />
+                  </View>
+                  <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
                   <View style={styles.containerDetailsRow}>
                     <View style={styles.containerComments}>
                       <TouchableOpacity
@@ -106,9 +101,9 @@ export const PostsScreen = () => {
                     </View>
                   </View>
                 </View>
-              </>
-            );
-          })}
+              );
+            }
+          )}
       </ScrollView>
     </View>
   );
@@ -136,7 +131,6 @@ const styles = StyleSheet.create({
     height: 60,
   },
   user: {
-    flex: 1,
     alignItems: 'flex-start',
   },
   nameUser: {
@@ -152,7 +146,6 @@ const styles = StyleSheet.create({
     color: '#212121',
   },
   containerPost: {
-    alignItems: 'flex-start',
     gap: 8,
   },
   photo: {
@@ -166,16 +159,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
     color: '#212121',
   },
-  containerDetails: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   containerDetailsRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 1,
+    marginBottom: 24,
   },
   containerComments: {
     flexDirection: 'row',
@@ -194,6 +182,8 @@ const styles = StyleSheet.create({
   },
   containerLocation: {
     flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
   },
   textLocation: {
     fontFamily: 'Roboto_400Regular',

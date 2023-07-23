@@ -23,6 +23,7 @@ import {
 import { registerDB } from '../utils/auth';
 import { updateUserProfile } from '../utils/auth';
 import { addUser } from '../redux/reduser';
+import { writeUserToFirestore } from '../utils/db';
 
 export const FormRegistr = () => {
   const [loginFocus, setLoginFocus] = useState(false);

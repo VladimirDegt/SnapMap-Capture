@@ -24,6 +24,8 @@ import {
 import { getDataFromFirestore, updateDataInFirestore } from '../utils/db';
 import { auth } from '../config';
 import { formatDateTime } from '../utils/formatDate';
+import { useSelector } from 'react-redux';
+import { selectLogin } from '../redux/selectors';
 
 export const CommentsScreen = () => {
   const [getIDPosts, setGetIDPosts] = useState('');
@@ -31,6 +33,7 @@ export const CommentsScreen = () => {
   const [updatePage, setUpdatePage] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
+  const author = useSelector(selectLogin);
   const { id } = route.params;
 
   useEffect(() => {
@@ -51,7 +54,6 @@ export const CommentsScreen = () => {
     return null;
   }
 
-  const user = auth.currentUser;
   const initialValue = {
     textArea: '',
   };
@@ -65,7 +67,7 @@ export const CommentsScreen = () => {
     }
     try {
       const newComment = {
-        author: user.displayName,
+        author: author,
         date: formattedDate,
         text: values.textArea,
       };
@@ -193,12 +195,14 @@ const styles = StyleSheet.create({
     height: 350,
   },
   containerComment: {
-    width: 260,
+    width: 280,
     flexDirection: 'row',
     marginBottom: 32,
   },
   containerName: {
+    width: 50,
     flexDirection: 'column',
+    alignItems: 'flex-start',
   },
   containerCommentText: {
     width: '100%',

@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -26,6 +27,7 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
 import { writeDataToFirestore } from '../utils/db';
+import { selectEmail, selectLogin } from '../redux/selectors';
 
 export const CreatePostsScreen = () => {
   const navigation = useNavigation();
@@ -36,6 +38,8 @@ export const CreatePostsScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [location, setLocation] = useState(null);
   const [locationReady, setLocationReady] = useState(false);
+  const login = useSelector(selectLogin);
+  const email = useSelector(selectEmail);
 
   useEffect(() => {
     (async () => {
@@ -132,7 +136,13 @@ export const CreatePostsScreen = () => {
                   return;
                 }
                 const nameLocation = values;
-                await writeDataToFirestore(nameLocation, location, photo);
+                await writeDataToFirestore(
+                  nameLocation,
+                  location,
+                  photo,
+                  login,
+                  email
+                );
                 resetForm();
                 navigation.navigate('PostsScreen');
               }}

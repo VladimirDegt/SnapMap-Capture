@@ -8,9 +8,17 @@ import {
 } from 'firebase/firestore';
 import { db } from '../config';
 
-export const writeDataToFirestore = async (nameLocation, location, photo) => {
+export const writeDataToFirestore = async (
+  nameLocation,
+  location,
+  photo,
+  login,
+  email
+) => {
   try {
     const docRef = await addDoc(collection(db, 'posts'), {
+      login,
+      email,
       nameLocation,
       location,
       photo,

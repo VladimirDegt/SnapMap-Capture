@@ -25,6 +25,7 @@ export const FormLogin = () => {
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(true);
+
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
     Roboto_400Regular,
