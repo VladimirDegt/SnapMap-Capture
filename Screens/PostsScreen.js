@@ -43,12 +43,14 @@ export const PostsScreen = () => {
   });
 
   useEffect(() => {
+    console.log('пішов запит до firebase');
     const fetchData = async () => {
       const posts = await getDataFromFirestore();
       setGetPosts(posts);
     };
 
     fetchData();
+    return
   }, [getNewPost, getNewComment]);
 
   let [fontsLoaded] = useFonts({
