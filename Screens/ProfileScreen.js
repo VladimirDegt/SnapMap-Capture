@@ -39,7 +39,7 @@ export const ProfileScreen = () => {
     };
 
     fetchData();
-  }, []);
+  });
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -100,50 +100,70 @@ export const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-      <ScrollView style={styles.containerPost}>
-        {getPosts &&
-          getPosts.map(
-            ({ id, location, nameLocation, photo, comments, login, email }) => {
-              return (
-                <View key={id}>
-                  <View style={styles.photo}>
-                    <Image
-                      source={{ uri: photo }}
-                      style={{ height: '100%', width: '100%' }}
-                    />
-                  </View>
-                  <Text style={styles.nameLocation}>{nameLocation?.name}</Text>
-                  <View style={styles.containerDetailsRow}>
-                    <View style={styles.containerComments}>
-                      <TouchableOpacity
-                        style={styles.containerIconComment}
-                        onPress={e => handleCommentAdd(e, id)}
-                      >
-                        <FontAwesome
-                          name="comment-o"
-                          size={24}
-                          color={ comments && comments.length > 0 ? 'red' : '#BDBDBD'}
-                        />
-                      </TouchableOpacity>
-                      <Text style={styles.textComment}>{comments && comments.length}</Text>
+        <ScrollView style={styles.containerPost}>
+          {getPosts &&
+            getPosts.map(
+              ({
+                id,
+                location,
+                nameLocation,
+                photo,
+                comments,
+                login,
+                email,
+              }) => {
+                return (
+                  <View key={id}>
+                    <View style={styles.photo}>
+                      <Image
+                        source={{ uri: photo }}
+                        style={{ height: '100%', width: '100%' }}
+                      />
                     </View>
-                    <View >
-                      <TouchableOpacity
-                        style={styles.containerLocation}
-                        onPress={e => handleLocation(e, location)}
-                      >
-                        <EvilIcons name="location" size={24} color="#BDBDBD" />
-                      <Text style={styles.textLocation}>
-                        {nameLocation?.region}
-                      </Text>
-                      </TouchableOpacity>
+                    <Text style={styles.nameLocation}>
+                      {nameLocation?.name}
+                    </Text>
+                    <View style={styles.containerDetailsRow}>
+                      <View style={styles.containerComments}>
+                        <TouchableOpacity
+                          style={styles.containerIconComment}
+                          onPress={e => handleCommentAdd(e, id)}
+                        >
+                          <FontAwesome
+                            name="comment-o"
+                            size={24}
+                            color={
+                              comments && comments.length > 0
+                                ? 'red'
+                                : '#BDBDBD'
+                            }
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.textComment}>
+                          {comments && comments.length}
+                        </Text>
+                      </View>
+                      <View>
+                        <TouchableOpacity
+                          style={styles.containerLocation}
+                          onPress={e => handleLocation(e, location)}
+                        >
+                          <EvilIcons
+                            name="location"
+                            size={24}
+                            color="#BDBDBD"
+                          />
+                          <Text style={styles.textLocation}>
+                            {nameLocation?.region}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
-                </View>
-              );
-            }
-          )}
-      </ScrollView>
+                );
+              }
+            )}
+        </ScrollView>
       </View>
     </ImageBackground>
   );
@@ -157,12 +177,11 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 147,
     backgroundColor: '#FFFFFF',
-    // borderTopRightRadius: 25, 
+    // borderTopRightRadius: 25,
     // borderTopLeftRadius: 25,
     borderRadius: 25,
     paddingLeft: 16,
     paddingRight: 16,
-
   },
   framePhoto: {
     width: 132,

@@ -20,19 +20,27 @@ import { getDataFromFirestore } from '../utils/db';
 
 export const PostsScreen = () => {
   const [getPosts, setGetPosts] = useState('');
-  const [getNewPost, setGetNewPost] = useState('');
+  const [getNewPost, setGetNewPost] = useState(false);
+  const [getNewComment, setGetNewComment] = useState(false);
   const navigation = useNavigation();
 
   const {
-    params: { newPost },
+    params: { newPost, newComment },
   } = useRoute();
 
-  useEffect(()=>{
-    if(!newPost){
-      return
+  useEffect(() => {
+    if (!newPost) {
+      return;
     }
-    setGetNewPost(newPost)
-  }, [getNewPost]);
+    setGetNewPost(true);
+  });
+
+  useEffect(() => {
+    if (!newComment) {
+      return;
+    }
+    setGetNewComment(newComment);
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +49,7 @@ export const PostsScreen = () => {
     };
 
     fetchData();
-  }, []);
+  }, [getNewPost, getNewComment]);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -95,20 +103,24 @@ export const PostsScreen = () => {
                         <FontAwesome
                           name="comment-o"
                           size={24}
-                          color={ comments && comments.length > 0 ? 'red' : '#BDBDBD'}
+                          color={
+                            comments && comments.length > 0 ? 'red' : '#BDBDBD'
+                          }
                         />
                       </TouchableOpacity>
-                      <Text style={styles.textComment}>{comments && comments.length}</Text>
+                      <Text style={styles.textComment}>
+                        {comments && comments.length}
+                      </Text>
                     </View>
-                    <View >
+                    <View>
                       <TouchableOpacity
                         style={styles.containerLocation}
                         onPress={e => handleLocation(e, location)}
                       >
                         <EvilIcons name="location" size={24} color="#BDBDBD" />
-                      <Text style={styles.textLocation}>
-                        {nameLocation?.region}
-                      </Text>
+                        <Text style={styles.textLocation}>
+                          {nameLocation?.region}
+                        </Text>
                       </TouchableOpacity>
                     </View>
                   </View>

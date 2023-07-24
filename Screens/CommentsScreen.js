@@ -41,9 +41,6 @@ export const CommentsScreen = () => {
       setGetIDPosts(posts.filter(item => item.id === id));
     };
     fetchData();
-  }, []);
-
-  useEffect(()=>{
   }, [updatePage]);
 
   let [fontsLoaded] = useFonts({
@@ -82,7 +79,7 @@ export const CommentsScreen = () => {
   };
 
   const handleGoBack = () => {
-    navigation.goBack();
+    navigation.navigate('PostsScreen', { newComment: true });
   };
 
   return (
