@@ -4,4 +4,4 @@
 <p>React-native, React-navigation, React-native-maps, Redux, Redux-persist, Formik</p>
 
 <h3>Backend:</h3>
-<p>Firebase</p>
+<p>Firebase Auth, Firestore Database</p>
