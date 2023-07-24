@@ -34,7 +34,8 @@ export const ProfileScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       const posts = await getDataFromFirestore();
-      setGetPosts(posts);
+      const filterPostsLogin = posts.filter(item => item.login === login);
+      setGetPosts(filterPostsLogin);
     };
 
     fetchData();
@@ -99,7 +100,7 @@ export const ProfileScreen = () => {
           </View>
         </TouchableWithoutFeedback>
 
-      <ScrollView contentContainerStyle={styles.containerPost}>
+      <ScrollView style={styles.containerPost}>
         {getPosts &&
           getPosts.map(
             ({ id, location, nameLocation, photo, comments, login, email }) => {
@@ -126,16 +127,16 @@ export const ProfileScreen = () => {
                       </TouchableOpacity>
                       <Text style={styles.textComment}>{comments && comments.length}</Text>
                     </View>
-                    <View style={styles.containerLocation}>
+                    <View >
                       <TouchableOpacity
-                        style={styles.iconLocation}
+                        style={styles.containerLocation}
                         onPress={e => handleLocation(e, location)}
                       >
                         <EvilIcons name="location" size={24} color="#BDBDBD" />
-                      </TouchableOpacity>
                       <Text style={styles.textLocation}>
                         {nameLocation?.region}
                       </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
@@ -156,13 +157,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 147,
     backgroundColor: '#FFFFFF',
-    borderTopRightRadius: 25, 
-    borderTopLeftRadius: 25,
+    // borderTopRightRadius: 25, 
+    // borderTopLeftRadius: 25,
+    borderRadius: 25,
     paddingLeft: 16,
     paddingRight: 16,
-    // flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'flex-end',
+
   },
   framePhoto: {
     width: 132,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
   logOutBtn: {
     position: 'absolute',
     top: 22,
-    right: 16,
+    right: 0,
     width: 24,
     height: 24,
   },
@@ -202,8 +202,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     paddingLeft: 16,
     paddingRight: 16,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
     backgroundColor: 'white',
   },
   title: {
@@ -230,6 +228,7 @@ const styles = StyleSheet.create({
     color: '#212121',
   },
   containerPost: {
+    height: 420,
     gap: 8,
   },
   photo: {

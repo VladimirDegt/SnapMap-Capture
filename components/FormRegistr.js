@@ -25,15 +25,16 @@ import { updateUserProfile } from '../utils/auth';
 import { addUser } from '../redux/reduser';
 
 export const FormRegistr = () => {
+  let [fontsLoaded] = useFonts({
+    Roboto_500Medium,
+    Roboto_400Regular,
+  });
+  const dispatch = useDispatch();
   const [loginFocus, setLoginFocus] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(true);
   const navigation = useNavigation();
-  let [fontsLoaded] = useFonts({
-    Roboto_500Medium,
-    Roboto_400Regular,
-  });
 
   if (!fontsLoaded) {
     return null;
@@ -50,8 +51,6 @@ export const FormRegistr = () => {
       ? setIsVisiblePassword(false)
       : setIsVisiblePassword(true);
   };
-
-  const dispatch = useDispatch();
 
   return (
     <ImageBackground

@@ -100,16 +100,16 @@ export const PostsScreen = () => {
                       </TouchableOpacity>
                       <Text style={styles.textComment}>{comments && comments.length}</Text>
                     </View>
-                    <View style={styles.containerLocation}>
+                    <View >
                       <TouchableOpacity
-                        style={styles.iconLocation}
+                        style={styles.containerLocation}
                         onPress={e => handleLocation(e, location)}
                       >
                         <EvilIcons name="location" size={24} color="#BDBDBD" />
-                      </TouchableOpacity>
                       <Text style={styles.textLocation}>
                         {nameLocation?.region}
                       </Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>

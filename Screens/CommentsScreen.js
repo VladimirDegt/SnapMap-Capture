@@ -44,7 +44,6 @@ export const CommentsScreen = () => {
   }, []);
 
   useEffect(()=>{
-    console.log('ререндер');
   }, [updatePage]);
 
   let [fontsLoaded] = useFonts({
