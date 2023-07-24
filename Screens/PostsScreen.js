@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
   Image,
@@ -20,7 +20,19 @@ import { getDataFromFirestore } from '../utils/db';
 
 export const PostsScreen = () => {
   const [getPosts, setGetPosts] = useState('');
+  const [getNewPost, setGetNewPost] = useState('');
   const navigation = useNavigation();
+
+  const {
+    params: { newPost },
+  } = useRoute();
+
+  useEffect(()=>{
+    if(!newPost){
+      return
+    }
+    setGetNewPost(newPost)
+  }, [getNewPost]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -83,10 +95,10 @@ export const PostsScreen = () => {
                         <FontAwesome
                           name="comment-o"
                           size={24}
-                          color={comments.length > 0 ? 'red' : '#BDBDBD'}
+                          color={ comments && comments.length > 0 ? 'red' : '#BDBDBD'}
                         />
                       </TouchableOpacity>
-                      <Text style={styles.textComment}>{comments.length}</Text>
+                      <Text style={styles.textComment}>{comments && comments.length}</Text>
                     </View>
                     <View style={styles.containerLocation}>
                       <TouchableOpacity
@@ -122,7 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-start',
     gap: 8,
-    marginBottom: 32,
+    marginBottom: 16,
     backgroundColor: '#FFFFFF',
   },
   photoUser: {
@@ -151,6 +163,7 @@ const styles = StyleSheet.create({
   photo: {
     width: '100%',
     height: 240,
+    marginBottom: 16,
     borderRadius: 8,
     overflow: 'hidden',
   },

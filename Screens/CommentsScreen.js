@@ -22,7 +22,6 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 import { getDataFromFirestore, updateDataInFirestore } from '../utils/db';
-import { auth } from '../config';
 import { formatDateTime } from '../utils/formatDate';
 import { useSelector } from 'react-redux';
 import { selectLogin } from '../redux/selectors';
@@ -43,6 +42,10 @@ export const CommentsScreen = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(()=>{
+    console.log('ререндер');
+  }, [updatePage]);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,

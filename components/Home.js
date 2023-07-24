@@ -17,8 +17,6 @@ onAuthStateChanged(auth, user => {
   if (user) {
     const uid = user.uid;
     console.log('user is signed in');
-
-    // navigation.navigate('PostsScreen');
   } else {
     console.log('user is signed out');
   }
@@ -111,13 +109,7 @@ export const Home = () => {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{
-          title: 'Не зрозуміло що це за екран',
-          headerTintColor: '#212121',
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            fontWeight: 'medium',
-            fontSize: 17,
-          },
+          headerShown: false,
           tabBarLabel: () => null,
           tabBarIcon: ({ focused, color, size }) => (
             <View

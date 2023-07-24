@@ -144,7 +144,7 @@ export const CreatePostsScreen = () => {
                   email
                 );
                 resetForm();
-                navigation.navigate('PostsScreen');
+                navigation.navigate('PostsScreen', {newPost: true});
               }}
             >
               {({ handleChange, handleSubmit, values }) => (
