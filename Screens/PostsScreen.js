@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import {
   Image,
@@ -17,41 +17,30 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { getDataFromFirestore } from '../utils/db';
+import { onSnapshot, collection } from 'firebase/firestore';
+import { db } from '../config';
 
 export const PostsScreen = () => {
   const [getPosts, setGetPosts] = useState('');
-  const [getNewPost, setGetNewPost] = useState(false);
-  const [getNewComment, setGetNewComment] = useState(false);
   const navigation = useNavigation();
 
-  const {
-    params: { newPost, newComment },
-  } = useRoute();
-
   useEffect(() => {
-    if (!newPost) {
-      return;
-    }
-    setGetNewPost(true);
-  });
-
-  useEffect(() => {
-    if (!newComment) {
-      return;
-    }
-    setGetNewComment(newComment);
-  });
-
-  useEffect(() => {
-    console.log('пішов запит до firebase');
     const fetchData = async () => {
       const posts = await getDataFromFirestore();
       setGetPosts(posts);
-    };
 
+    };
     fetchData();
-    return
-  }, [getNewPost, getNewComment]);
+
+    // підписуємося на оновлення у бд
+    const unsubscribe =  onSnapshot(db.collection('posts'), snapshot => {
+      const updatedPosts = snapshot.docs.map(doc => doc.data());
+      console.log('updatedPosts :>> ', updatedPosts);
+      setGetPosts(updatedPosts);
+    });
+
+    return () => unsubscribe(); // відписуємося
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
