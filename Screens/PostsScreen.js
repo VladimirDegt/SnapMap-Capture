@@ -28,14 +28,15 @@ export const PostsScreen = () => {
     const fetchData = async () => {
       const posts = await getDataFromFirestore();
       setGetPosts(posts);
-
     };
     fetchData();
 
-    // підписуємося на оновлення у бд
-    const unsubscribe =  onSnapshot(db.collection('posts'), snapshot => {
-      const updatedPosts = snapshot.docs.map(doc => doc.data());
-      console.log('updatedPosts :>> ', updatedPosts);
+    // підписуємося на оновлення бд
+    const unsubscribe = onSnapshot(collection(db, 'posts'), snapshot => {
+      const updatedPosts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
       setGetPosts(updatedPosts);
     });
 

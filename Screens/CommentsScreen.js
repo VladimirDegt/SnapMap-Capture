@@ -1,6 +1,8 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Formik } from 'formik';
+import { useSelector } from 'react-redux';
+import uuid from 'uuid';
 import {
   Text,
   TextInput,
@@ -22,14 +24,16 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 import { getDataFromFirestore, updateDataInFirestore } from '../utils/db';
+import { onSnapshot, collection } from 'firebase/firestore';
+import { db } from '../config';
+
 import { formatDateTime } from '../utils/formatDate';
-import { useSelector } from 'react-redux';
+
 import { selectLogin } from '../redux/selectors';
 
 export const CommentsScreen = () => {
   const [getIDPosts, setGetIDPosts] = useState('');
   const [textAreaFocus, setTextAreaFocus] = useState(false);
-  const [updatePage, setUpdatePage] = useState(false);
   const navigation = useNavigation();
   const route = useRoute();
   const author = useSelector(selectLogin);
@@ -41,7 +45,18 @@ export const CommentsScreen = () => {
       setGetIDPosts(posts.filter(item => item.id === id));
     };
     fetchData();
-  }, [updatePage]);
+
+    // підписуємося на оновлення бд
+    const unsubscribe = onSnapshot(collection(db, 'posts'), snapshot => {
+      const updatedPosts = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setGetIDPosts(updatedPosts.filter(item => item.id === id));
+    });
+
+    return () => unsubscribe(); // відписуємося
+  }, []);
 
   let [fontsLoaded] = useFonts({
     Roboto_500Medium,
@@ -71,7 +86,7 @@ export const CommentsScreen = () => {
         text: values.textArea,
       };
       await updateDataInFirestore(id, newComment);
-      setUpdatePage(prevState => !prevState);
+
       resetForm();
     } catch (error) {
       console.log(error.message);
@@ -79,7 +94,7 @@ export const CommentsScreen = () => {
   };
 
   const handleGoBack = () => {
-    navigation.navigate('PostsScreen', { newComment: true });
+    navigation.navigate('PostsScreen');
   };
 
   return (
@@ -101,7 +116,7 @@ export const CommentsScreen = () => {
           <ScrollView style={styles.containerScroll}>
             {getIDPosts[0].comments.map(({ author, date, text }) => {
               return (
-                <View style={styles.containerComment} key={date}>
+                <View style={styles.containerComment} key={uuid.v4()}>
                   <View style={styles.containerName}>
                     <Text>Ім'я:</Text>
                     <Text style={styles.name}>{author}</Text>

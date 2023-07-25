@@ -16,7 +16,7 @@ const MainStack = createStackNavigator();
 export default function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={<Text>"null"</Text>} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
           <MainStack.Navigator initialRouteName="Login">
             <MainStack.Screen

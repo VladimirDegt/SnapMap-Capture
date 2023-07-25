@@ -5,7 +5,6 @@ import {
   updateDoc,
   doc,
   getDoc,
-  onSnapshot, 
 } from 'firebase/firestore';
 import { db } from '../config';
 
@@ -63,5 +62,3 @@ export const updateDataInFirestore = async (docId, newComment) => {
     console.log(error);
   }
 };
-
-
