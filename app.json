@@ -21,11 +21,17 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.vladimir198051.AwesomeProject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "ios.config.googleMapsApiKey":"вставити ключ"
+    "ios.config.googleMapsApiKey": "вставити ключ",
+    "extra": {
+      "eas": {
+        "projectId": "9322dad9-83af-4529-ba8d-a19df86654b5"
+      }
+    }
   }
 }

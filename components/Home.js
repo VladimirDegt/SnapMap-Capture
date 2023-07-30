@@ -13,17 +13,19 @@ import { auth } from '../config';
 
 const Tab = createBottomTabNavigator();
 
-onAuthStateChanged(auth, user => {
-  if (user) {
-    const uid = user.uid;
-    console.log('user is signed in');
-  } else {
-    console.log('user is signed out');
-  }
-});
-
 export const Home = () => {
   const navigation = useNavigation();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        const uid = user.uid;
+        console.log('User is signed. id=', uid);
+      } else {
+        console.log('user is signed out', uid);
+      }
+    });
+  }, []);
 
   const {
     params: { values },

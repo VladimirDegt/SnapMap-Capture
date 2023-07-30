@@ -11,6 +11,7 @@ export const registerDB = ({ email, password }) =>
 
 export const authStateChanged = async (onChange = () => {}) => {
   onAuthStateChanged(user => {
+    console.log('user -->', user);
     onChange(user);
   });
 };
