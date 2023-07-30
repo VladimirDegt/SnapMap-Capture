@@ -47,35 +47,35 @@ Firebase
 #### Registration
 
 <div style="display: flex; gap: 8px; ">
-  <img src="./assets/register_1.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
-  <img src="./assets/register_2.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/register_1.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/register_2.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
 </div>
 
 #### Login
 
 <div style="display: flex; gap: 8px; ">
-  <img src="./assets/login_1.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
-  <img src="./assets/login_2.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/login_1.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/login_2.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
 </div>
 
 #### Create post
 
 <div style="display: flex; gap: 8px; ">
-  <img src="./assets/create_1.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
-  <img src="./assets/create_2.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/create_1.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/create_2.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
 </div>
 
 #### Posts & Comments
 
 <div style="display: flex; gap: 8px; ">
-  <img src="./assets/posts.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
-  <img src="./assets/comments.jpg" alt="#" width="100" height="216" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/posts.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/comments.jpg" alt="#" width="150" height="324" style="border: 1px solid gray; border-radius: 6px">
 </div>
 
 #### Profile
 
 <div style="display: flex; gap: 8px; ">
-  <img src="./assets/profile.jpg" alt="#" width="100"  style="border: 1px solid gray; border-radius: 6px">
+  <img src="./assets/profile.jpg" alt="#" width="150"  style="border: 1px solid gray; border-radius: 6px">
 </div>
 
 ## <a href="#title">Thank you for watching!</a>
